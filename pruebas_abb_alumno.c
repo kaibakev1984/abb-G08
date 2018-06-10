@@ -12,23 +12,24 @@ static void pruebas_tester(){
     char *clave2 = "gato", *valor2 = "miau";
     char *clave3 = "vaca", *valor3 = "mu";
     char *clave4 = "loro", *valor4 = "galleta";
+    char *clave5 = "cobayo", *valor5 = "quiz";
+    char *clave6 = "zorro", *valor6 = "en su corcel...";
 
     print_test("Se inserto clave1", abb_guardar(arbol, clave1, valor1));
     print_test("Se inserto clave2", abb_guardar(arbol, clave2, valor2));
     print_test("Se inserto clave3", abb_guardar(arbol, clave3, valor3));
     print_test("Se inserto clave4", abb_guardar(arbol, clave4, valor4));
-    print_test("La cantidad de elementos es 4", abb_cantidad(arbol) == 4);
+    print_test("Se inserto clave5", abb_guardar(arbol, clave5, valor5));
+    print_test("Se inserto clave6", abb_guardar(arbol, clave6, valor6));
+    print_test("La cantidad de elementos es 6", abb_cantidad(arbol) == 6);
 
-    /* Se procederá a borrar claves del árbol */
-    print_test("Se borro clave 1", valor1 == abb_borrar(arbol, clave1));
-    print_test("Obtener clave 1 es NULL", !abb_obtener(arbol, clave1));
-    print_test("Se borro clave 2", valor2 == abb_borrar(arbol, clave2));
-    print_test("Obtener clave 2 es NULL", !abb_obtener(arbol, clave2));
-    print_test("Se borro clave 4", valor4 == abb_borrar(arbol, clave4));
-    print_test("Obtener clave 4 es NULL", !abb_obtener(arbol, clave4));
-    print_test("Se borro clave 3", valor3 == abb_borrar(arbol, clave3));
-    print_test("Obtener clave 3 es NULL", !abb_obtener(arbol, clave3));
+    /* Pruebas sobre el abb borrar, en nodo con 1 hijo */
+    print_test("Se borro clave3 del abb", valor3 == abb_borrar(arbol, clave3));
+    print_test("Buscar clave3 es NULL, no pertenece", !abb_pertenece(arbol, clave3));
 
+    /* Pruebas sobre el abb borrar, en nodo con 2 hijos */
+    print_test("Se borro clave2 del abb", valor2 == abb_borrar(arbol, clave2));
+    print_test("Buscar clave2 es NULL, no pertenece", !abb_pertenece(arbol, clave2));
     abb_destruir(arbol);
 }
 
