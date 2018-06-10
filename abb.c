@@ -111,21 +111,25 @@ abb_nodo_t *abb_padre_buscar(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, 
 	}
 }
 
-void abb_cambiar_padre_hijo(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, bool ok_izq){
-	if(!padre) arbol->raiz = nodo;
-	if(ok_izq)
-		padre->izq = nodo;
+void abb_cambiar_padre_hijo(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, abb_nodo_t *nodo_a){
+	if(!padre) arbol->raiz = nodo_a;
+	if(padre->izq == nodo)
+		padre->izq = nodo_a;
 	else
-		padre->der = nodo;
+		padre->der = nodo_a;
 }
 
 void *abb_eliminar_nodo(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo){
+	if(!padre){
+		arbol->raiz = (nodo->izq ? nodo->izq : nodo->der);
+		return abb_nodo_borrar(arbol, nodo);
+	}
 	if(!nodo->izq){
-		abb_cambiar_padre_hijo(arbol, padre, nodo->der, padre->izq == nodo);
+		abb_cambiar_padre_hijo(arbol, padre, nodo, nodo->der);
 		return abb_nodo_borrar(arbol, nodo);
 	}
 	if(!nodo->der){
-		abb_cambiar_padre_hijo(arbol, padre, nodo->izq , padre->izq == nodo);
+		abb_cambiar_padre_hijo(arbol, padre, nodo, nodo->izq);
 		return abb_nodo_borrar(arbol, nodo);
 	}
 	abb_nodo_t *nodo_a = nodo->der;
@@ -148,6 +152,7 @@ void *abb_borrar(abb_t *arbol, const char *clave){
 	
 	/* Comienzan los casos de borrado */
 	void * dato = abb_eliminar_nodo(arbol, padre, nodo);
+	arbol->cantidad--;
 	return dato;
 }
 void *abb_obtener(const abb_t *arbol, const char *clave){

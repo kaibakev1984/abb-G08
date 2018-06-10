@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void pruebas_tester(){
+void pruebas_tester(){
     abb_t *arbol = abb_crear(strcmp, NULL);
 
     char *clave1 = "perro", *valor1 = "guau";
@@ -23,6 +23,11 @@ static void pruebas_tester(){
     print_test("Se inserto clave6", abb_guardar(arbol, clave6, valor6));
     print_test("La cantidad de elementos es 6", abb_cantidad(arbol) == 6);
 
+
+    /* Pruebas sobre el abb borrar, cuando se borra raíz */
+    print_test("Se borro clave1", valor1 == abb_borrar(arbol, clave1));
+    print_test("Buscar clave1 es NULL, no pertenece", !abb_pertenece(arbol, clave1));
+
     /* Pruebas sobre el abb borrar, en nodo con 1 hijo */
     print_test("Se borro clave3 del abb", valor3 == abb_borrar(arbol, clave3));
     print_test("Buscar clave3 es NULL, no pertenece", !abb_pertenece(arbol, clave3));
@@ -30,6 +35,7 @@ static void pruebas_tester(){
     /* Pruebas sobre el abb borrar, en nodo con 2 hijos */
     print_test("Se borro clave2 del abb", valor2 == abb_borrar(arbol, clave2));
     print_test("Buscar clave2 es NULL, no pertenece", !abb_pertenece(arbol, clave2));
+
     abb_destruir(arbol);
 }
 
@@ -170,11 +176,11 @@ static void pruebas_tester(){
 }
 
 void pruebas_abb_alumno(){
-    pruebas_tester();
-//	prueba_crear_abb_vacio();
-//	prueba_abb_insertar();
-//	prueba_abb_reemplazar();
-//	prueba_abb_reemplazar_con_destruir();
-//    prueba_abb_borrar();
+  //  pruebas_tester();
+	prueba_crear_abb_vacio();
+	prueba_abb_insertar();
+	prueba_abb_reemplazar();
+	prueba_abb_reemplazar_con_destruir();
+    prueba_abb_borrar();
 
 }
