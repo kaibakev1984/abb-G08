@@ -156,15 +156,15 @@ void *abb_borrar(abb_t *arbol, const char *clave){
 	return dato;
 }
 void *abb_obtener(const abb_t *arbol, const char *clave){
-	abb_nodo_t *abb_nodo = abb_nodo_buscar((abb_t *)arbol, arbol->raiz, clave);
-	if(!abb_nodo) return NULL;
-	return abb_nodo->dato;
+	abb_nodo_t *nodo = arbol->raiz;
+	nodo = abb_nodo_buscar((abb_t *)arbol, nodo, clave);
+	if(!nodo) return NULL;
+	return nodo->dato;
 }
 
 bool abb_pertenece(const abb_t *arbol, const char *clave){
-	abb_nodo_t *abb_nodo = abb_nodo_buscar((abb_t *)arbol, arbol->raiz, clave);
-	if(!abb_nodo) return false;
-	return true;
+	abb_nodo_t *nodo = arbol->raiz;
+	return abb_nodo_buscar((abb_t *)arbol, nodo, clave);
 }
 
 size_t abb_cantidad(abb_t *arbol){

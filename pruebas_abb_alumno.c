@@ -207,6 +207,66 @@ static void prueba_abb_valor_null()
     abb_destruir(arbol);
 }
 
+static void prueba_abb_volumen(size_t largo, bool debug)
+{
+    abb_t *arbol = abb_crear(strcmp, NULL);
+
+    const size_t largo_clave = 10;
+    char (*claves)[largo_clave] = malloc(largo * largo_clave);
+
+    unsigned* valores[largo];
+
+    /* Inserta 'largo' parejas en el abb */
+    bool ok = true;
+    for (unsigned i = 0; i < largo; i++) {
+        valores[i] = malloc(sizeof(int));
+        sprintf(claves[i], "%08d", i);
+        *valores[i] = i;
+        ok = abb_guardar(arbol, claves[i], valores[i]);
+        if (!ok) break;
+    }
+
+    if (debug) print_test("Prueba abb almacenar muchos elementos", ok);
+    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(arbol) == largo);
+
+    /* Verifica que devuelva los valores correctos */
+    for (size_t i = 0; i < largo; i++) {
+        ok = abb_pertenece(arbol, claves[i]);
+        if (!ok) break;
+        ok = abb_obtener(arbol, claves[i]) == valores[i];
+        if (!ok) break;
+    }
+
+    if (debug) print_test("Prueba abb pertenece y obtener muchos elementos", ok);
+    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(arbol) == largo);
+
+    /* Verifica que borre y devuelva los valores correctos */
+    for (size_t i = 0; i < largo; i++) {
+        ok = abb_borrar(arbol, claves[i]) == valores[i];
+        if (!ok) break;
+    }
+
+    if (debug) print_test("Prueba abb borrar muchos elementos", ok);
+    if (debug) print_test("Prueba abb la cantidad de elementos es 0", abb_cantidad(arbol) == 0);
+
+    /* Destruye el hash y crea uno nuevo que sí libera */
+    abb_destruir(arbol);
+    arbol = abb_crear(strcmp, free);
+
+    /* Inserta 'largo' parejas en el hash */
+    ok = true;
+    for (size_t i = 0; i < largo; i++) {
+        ok = abb_guardar(arbol, claves[i], valores[i]);
+        if (!ok) break;
+    }
+
+    free(claves);
+
+    /* Destruye el hash - debería liberar los enteros */
+    abb_destruir(arbol);
+
+}
+
 void pruebas_abb_alumno(){
 	prueba_crear_abb_vacio();
 	prueba_abb_insertar();
@@ -215,4 +275,5 @@ void pruebas_abb_alumno(){
     prueba_abb_borrar();
     prueba_abb_clave_vacia();
     prueba_abb_valor_null();
+    prueba_abb_volumen(1000, true);
 }
