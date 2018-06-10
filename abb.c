@@ -111,43 +111,48 @@ abb_nodo_t *abb_padre_buscar(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, 
 	}
 }
 
-void abb_transplantar(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, abb_nodo_t *nodo_n){
-	if(!padre) arbol->raiz = nodo_n;
-	else if(padre->izq == nodo)
-		padre->izq = nodo_n;
+void abb_cambiar_padre_hijo(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, abb_nodo_t *nodo_a){
+	if(!padre) arbol->raiz = nodo_a;
+	if(padre->izq == nodo)
+		padre->izq = nodo_a;
 	else
-		padre->der = nodo_n;
+		padre->der = nodo_a;
 }
 
 void *abb_eliminar_nodo(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo){
-	abb_nodo_t *q = nodo;
-	if(!nodo->der){
-		abb_transplantar(arbol, padre, nodo, nodo->izq);
-	}else if(!nodo->izq){
-		abb_transplantar(arbol, padre, nodo, nodo->der);
-	}else{
-		padre = NULL;
-		abb_nodo_t *nodo_a = nodo->der;
-		while(nodo_a->izq){
-			padre = nodo_a;
-			nodo_a = nodo_a->izq;
-		}
-		abb_nodo_swap(nodo, nodo_a);
-		abb_eliminar_nodo(arbol, padre, nodo_a);
+	if(!padre){
+		arbol->raiz = (nodo->izq ? nodo->izq : nodo->der);
+		return abb_nodo_borrar(arbol, nodo);
 	}
-	return abb_nodo_borrar(arbol, q);
+	if(!nodo->izq){
+		abb_cambiar_padre_hijo(arbol, padre, nodo, nodo->der);
+		return abb_nodo_borrar(arbol, nodo);
+	}
+	if(!nodo->der){
+		abb_cambiar_padre_hijo(arbol, padre, nodo, nodo->izq);
+		return abb_nodo_borrar(arbol, nodo);
+	}
+	abb_nodo_t *nodo_a = nodo->der;
+	padre = nodo;
+	while(nodo_a->izq){
+		padre = nodo_a;
+		nodo_a = nodo_a->izq;
+	}
+	abb_nodo_swap(nodo, nodo_a);
+	return abb_eliminar_nodo(arbol, padre, nodo_a);
 }
 
 void *abb_borrar(abb_t *arbol, const char *clave){
 	abb_nodo_t *nodo = arbol->raiz;
 	nodo = abb_nodo_buscar(arbol, nodo, clave);
 	if(!nodo) return NULL;
-	abb_nodo_t *padre = arbol->raiz;
+	abb_nodo_t *padre = NULL;
 	abb_nodo_t *nodo_a = arbol->raiz;
 	padre = abb_padre_buscar(arbol, padre, nodo_a, clave);
 	
 	/* Comienzan los casos de borrado */
-	void *dato = abb_eliminar_nodo(arbol, padre, nodo);
+	void * dato = abb_eliminar_nodo(arbol, padre, nodo);
+	arbol->cantidad--;
 	return dato;
 }
 void *abb_obtener(const abb_t *arbol, const char *clave){
