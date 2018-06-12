@@ -103,11 +103,9 @@ abb_nodo_t *abb_padre_buscar(abb_t *arbol, abb_nodo_t *padre, abb_nodo_t *nodo, 
 	if(!nodo) return padre;
 	if(!arbol->cmp(clave, nodo->clave)) return padre;
 	if(arbol->cmp(clave, nodo->clave) < 0){
-		padre = nodo;
-		return abb_padre_buscar(arbol, padre, nodo->izq, clave);
+		return abb_padre_buscar(arbol, nodo, nodo->izq, clave);
 	}else{
-		padre = nodo;
-		return abb_padre_buscar(arbol, padre, nodo->der, clave);
+		return abb_padre_buscar(arbol, nodo, nodo->der, clave);
 	}
 }
 
