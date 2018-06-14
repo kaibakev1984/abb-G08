@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -g -std=c99 -Wall -Wconversion -Wno-sign-conversion -Werror
 VFLAGS = --leak-check=full --show-reachable=yes --track-origins=yes
 GFLAGS = -tui
-OBJFILES = pruebas_abb_alumno.o testing.o main.o abb.o
+OBJFILES = pruebas_abb_alumno.o testing.o main.o abb.o pila.o
 EXEC = pruebas
 
 %.o: %.c %.h
