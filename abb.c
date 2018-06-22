@@ -3,6 +3,7 @@
 #include "pila.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /* Estructuras auxiliares para el abb */
 typedef struct abb_nodo{
@@ -185,16 +186,23 @@ void abb_destruir(abb_t *arbol){
 
 
 /* Iterador interno */
-void abb_in_order_aux(abb_nodo_t *abb_nodo, bool visitar(const char * clave, void * dato, void * extra), void *extra){
-	if (abb_nodo == NULL) return;
-	abb_in_order_aux(abb_nodo->izq,visitar,extra);
-	if(!visitar(abb_nodo->clave, abb_nodo->dato, extra)) return;
-	abb_in_order_aux(abb_nodo->der,visitar,extra);
+void abb_in_order_aux(abb_nodo_t *abb_nodo, bool visitar(const char * clave, void * dato, void * extra), void *extra,bool*condicion){
+	if ( (abb_nodo == NULL) || (*condicion == false) )  return;
+	abb_in_order_aux(abb_nodo->izq,visitar,extra,condicion);
+	if(*condicion == true){
+		bool visit = visitar(abb_nodo->clave, abb_nodo->dato, extra);
+		if (visit == false){ 
+			*condicion = false;
+			return;
+		}
+	}
+	abb_in_order_aux(abb_nodo->der,visitar,extra,condicion);
 }
 
 void abb_in_order(abb_t *arbol, bool visitar(const char * clave, void * dato, void * extra), void *extra){
 	if((arbol->raiz == NULL) || (visitar == NULL)) return;
-	abb_in_order_aux(arbol->raiz,visitar,extra);
+	bool condicion = true; 
+	abb_in_order_aux(arbol->raiz,visitar,extra,&condicion);
 }
 
 

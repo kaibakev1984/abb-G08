@@ -4,31 +4,65 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-/*
-static void pruebas_tester(){
+
+void pruebas_tester(){
     abb_t *arbol = abb_crear(strcmp, NULL);
-    char *clave1 = "1", *valor1 = "1";
-    char *clave2 = "2", *valor2 = "2";
-    char *clave3 = "3", *valor3 = "3";
-    char *clave4 = "4", *valor4 = "4";
-    char *clave5 = "5", *valor5 = "5";
+
+    char *clave1 = "perro", *valor1 = "guau";
+    char *clave2 = "gato", *valor2 = "miau";
+    char *clave3 = "vaca", *valor3 = "mu";
+    char *clave4 = "loro", *valor4 = "galleta";
+    char *clave5 = "cobayo", *valor5 = "quiz";
+    char *clave6 = "zorro", *valor6 = "en su corcel...";
+    char *clave7 = "delfin", *valor7 = "jeje";
+    char *clave8 = "bufalo", *valor8 = "pff";
+    char *clave9 = "morsa", *valor9 = "ooo";
+    char *clave10 = "iguana", *valor10 = "glu";
+    char *clave11 = "elefante", *valor11 = "ruu";
+
+
 
     print_test("Se inserto clave1", abb_guardar(arbol, clave1, valor1));
     print_test("Se inserto clave2", abb_guardar(arbol, clave2, valor2));
-    print_test("Se inserto clave4", abb_guardar(arbol, clave4, valor4));
     print_test("Se inserto clave3", abb_guardar(arbol, clave3, valor3));
+    print_test("Se inserto clave4", abb_guardar(arbol, clave4, valor4));
     print_test("Se inserto clave5", abb_guardar(arbol, clave5, valor5));
+    print_test("Se inserto clave6", abb_guardar(arbol, clave6, valor6));
+    print_test("Se inserto clave7", abb_guardar(arbol, clave7, valor7));
+    print_test("Se inserto clave8", abb_guardar(arbol, clave8, valor8));
+    print_test("Se inserto clave9", abb_guardar(arbol, clave9, valor9));
+    print_test("Se inserto clave10", abb_guardar(arbol, clave10, valor10));
+    print_test("Se inserto clave10", abb_guardar(arbol, clave11, valor11));
+    print_test("La cantidad de elementos es 11", abb_cantidad(arbol) == 11);
 
-    print_test("Se borro clave1", valor1 == abb_borrar(arbol, clave1));
-    print_test("Se borro clave2", valor2 == abb_borrar(arbol, clave2));
-    print_test("Se borro clave3", valor3 == abb_borrar(arbol, clave3));
-    print_test("Se borro clave4", valor4 == abb_borrar(arbol, clave4));
-    print_test("Se borro clave5", valor5 == abb_borrar(arbol, clave5));
+
+    print_test("Se borro clave11 del abb", valor11 == abb_borrar(arbol, clave11));
+    print_test("Buscar clave11 es NULL, no pertenece", !abb_pertenece(arbol, clave11));
+    print_test("Se borro clave10 del abb", valor10 == abb_borrar(arbol, clave10));
+    print_test("Buscar clave10 es NULL, no pertenece", !abb_pertenece(arbol, clave10));
+    print_test("Se borro clave9 del abb", valor9 == abb_borrar(arbol, clave9));
+    print_test("Buscar clave9 es NULL, no pertenece", !abb_pertenece(arbol, clave9));
+    print_test("Se borro clave8 del abb", valor8 == abb_borrar(arbol, clave8));
+    print_test("Buscar clave8 es NULL, no pertenece", !abb_pertenece(arbol, clave8));
+    print_test("Se borro clave7 del abb", valor7 == abb_borrar(arbol, clave7));
+    print_test("Buscar clave7 es NULL, no pertenece", !abb_pertenece(arbol, clave7));
+    print_test("Se borro clave6 del abb", valor6 == abb_borrar(arbol, clave6));
+    print_test("Buscar clave6 es NULL, no pertenece", !abb_pertenece(arbol, clave6));
+    print_test("Se borro clave5 del abb", valor5 == abb_borrar(arbol, clave5));
+    print_test("Buscar clave5 es NULL, no pertenece", !abb_pertenece(arbol, clave5));
+    print_test("Se borro clave4 del abb", valor4 == abb_borrar(arbol, clave4));
+    print_test("Buscar clave4 es NULL, no pertenece", !abb_pertenece(arbol, clave4));
+    print_test("Se borro clave3 del abb", valor3 == abb_borrar(arbol, clave3));
+    print_test("Buscar clave3 es NULL, no pertenece", !abb_pertenece(arbol, clave3));
+    print_test("Se borro clave2 del abb", valor2 == abb_borrar(arbol, clave2));
+    print_test("Buscar clave2 es NULL, no pertenece", !abb_pertenece(arbol, clave2));
+    print_test("Se borro clave1 del abb", valor1 == abb_borrar(arbol, clave1));
+    print_test("Buscar clave1 es NULL, no pertenece", !abb_pertenece(arbol, clave1));
 
     abb_destruir(arbol);
 }
-*/
-static void prueba_crear_abb_vacio(){
+
+ void prueba_crear_abb_vacio(){
 	abb_t *arbol = abb_crear(NULL, NULL);
 	print_test("abb fue creado", arbol);
 	print_test("Prueba abb cantidad de elementos es 0", !abb_cantidad(arbol));
@@ -39,20 +73,7 @@ static void prueba_crear_abb_vacio(){
 	abb_destruir(arbol);
 }
 
-static void pruebas_iterar_abb_vacio(){
-    abb_t *arbol = abb_crear(strcmp, NULL);
-    abb_iter_t *iter = abb_iter_in_crear(arbol);
-
-    print_test("Pruebas abb iter crear iterador abb vacio", iter);
-    print_test("Pruebas abb iter esta al final", abb_iter_in_al_final(iter));
-    print_test("Prueba abb iter avanzar es false", !abb_iter_in_avanzar(iter));
-    print_test("Prueba abb iter ver actual es NULL", !abb_iter_in_ver_actual(iter));
-
-    abb_iter_in_destruir(iter);
-    abb_destruir(arbol);
-}
-
-static void prueba_abb_insertar(){
+ void prueba_abb_insertar(){
 	abb_t *arbol = abb_crear(strcmp, NULL);
 
 	char *clave1 = "perro", *valor1 = "guau";
@@ -81,7 +102,7 @@ static void prueba_abb_insertar(){
 	abb_destruir(arbol);
 }
 
-void prueba_abb_reemplazar(){
+ void prueba_abb_reemplazar(){
 	abb_t *arbol = abb_crear(strcmp, NULL);
 
     char *clave1 = "perro", *valor1a = "guau", *valor1b = "warf";
@@ -105,7 +126,7 @@ void prueba_abb_reemplazar(){
     abb_destruir(arbol);
 }
 
-void prueba_abb_reemplazar_con_destruir(){
+ void prueba_abb_reemplazar_con_destruir(){
 	abb_t *arbol = abb_crear(strcmp, free);
 
     char *clave1 = "perro", *valor1a, *valor1b;
@@ -138,7 +159,7 @@ void prueba_abb_reemplazar_con_destruir(){
     abb_destruir(arbol);
 }
 
-void prueba_abb_borrar(){
+ void prueba_abb_borrar(){
     abb_t *arbol = abb_crear(strcmp, NULL);
 
     
@@ -177,196 +198,223 @@ void prueba_abb_borrar(){
 
 }
 
-void prueba_abb_clave_vacia(){
-
-    abb_t *arbol = abb_crear(strcmp, NULL);
-    char *clave = "", *valor = "";
-
-    print_test("Pruebas abb guardar clave vacia", abb_guardar(arbol, clave, valor));
-    print_test("Prueba abb la cantidad de elementos es 1", abb_cantidad(arbol) == 1);
-    print_test("Prueba abb obtener clave vacia es valor", abb_obtener(arbol, clave));
-    print_test("Prueba abb pertenece clave vacia, es true", abb_pertenece(arbol, clave));
-    print_test("Prueba abb borrar clave vacia, es valor", abb_borrar(arbol, clave) == valor);
-    print_test("Prueba abb la cantidad de elementos es 0", !abb_cantidad(arbol));
-
-    abb_destruir(arbol);
-}
-
-void prueba_abb_valor_null()
-{
-    abb_t *arbol = abb_crear(strcmp, NULL);
-    char *clave = "", *valor = NULL;
-
-    /* Inserta 1 valor y luego lo borra */
-    print_test("Prueba abb insertar clave vacia valor NULL", abb_guardar(arbol, clave, valor));
-    print_test("Prueba abb la cantidad de elementos es 1", abb_cantidad(arbol) == 1);
-    print_test("Prueba abb obtener clave vacia es valor NULL", abb_obtener(arbol, clave) == valor);
-    print_test("Prueba abb pertenece clave vacia, es true", abb_pertenece(arbol, clave));
-    print_test("Prueba abb borrar clave vacia, es valor NULL", abb_borrar(arbol, clave) == valor);
-    print_test("Prueba abb la cantidad de elementos es 0", !abb_cantidad(arbol));
-
-    abb_destruir(arbol);
-}
-
-void prueba_abb_volumen(size_t largo, bool debug)
-{
-    abb_t *arbol = abb_crear(strcmp, NULL);
-
-    const size_t largo_clave = 10;
-    char (*claves)[largo_clave] = malloc(largo * largo_clave);
-
-    unsigned* valores[largo];
-
-    /* Inserta 'largo' parejas en el abb */
-    bool ok = true;
-    for (unsigned i = 0; i < largo; i++) {
-        valores[i] = malloc(sizeof(int));
-        sprintf(claves[i], "%08d", i);
-        *valores[i] = i;
-        ok = abb_guardar(arbol, claves[i], valores[i]);
-        if (!ok) break;
-    }
-
-    if (debug) print_test("Prueba abb almacenar muchos elementos", ok);
-    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(arbol) == largo);
-
-    /* Verifica que devuelva los valores correctos */
-    for (size_t i = 0; i < largo; i++) {
-        ok = abb_pertenece(arbol, claves[i]);
-        if (!ok) break;
-        ok = abb_obtener(arbol, claves[i]) == valores[i];
-        if (!ok) break;
-    }
-
-    if (debug) print_test("Prueba abb pertenece y obtener muchos elementos", ok);
-    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(arbol) == largo);
-
-    /* Verifica que borre y devuelva los valores correctos */
-    for (size_t i = 0; i < largo; i++) {
-        ok = abb_borrar(arbol, claves[i]) == valores[i];
-        if (!ok) break;
-    }
-
-    if (debug) print_test("Prueba abb borrar muchos elementos", ok);
-    if (debug) print_test("Prueba abb la cantidad de elementos es 0", abb_cantidad(arbol) == 0);
-
-    /* Destruye el abb y crea uno nuevo que sí libera */
-    abb_destruir(arbol);
-    arbol = abb_crear(strcmp, free);
-
-    /* Inserta 'largo' parejas en el abb */
-    ok = true;
-    for (size_t i = 0; i < largo; i++) {
-        ok = abb_guardar(arbol, claves[i], valores[i]);
-        if (!ok) break;
-    }
-
-    free(claves);
-
-    /* Destruye el abb - debería liberar los enteros */
-    abb_destruir(arbol);
-
-}
-
 void reemplazar(int*dato,int* extra){
     extra[0] += *dato;
 }
 
 bool wrapper(const char*clave,void* dato,void*extra){
     if (dato == NULL) return false;
+    printf("%s\n",clave );
+    if (!strcmp(clave,"elefante"))return false;
     reemplazar((int*)dato,(int*)extra);
     return true;
 }
 
-static void prueba_iterador_interno(){
+void pruebas_iterador_interno(){
     abb_t *arbol = abb_crear(strcmp, NULL);
+
     char *clave1 = "perro";
     char *clave2 = "gato";
     char *clave3 = "vaca";
+    char *clave4 = "loro";
+    char *clave5 = "cobayo";
+    char *clave6 = "zorro";
+    char *clave7 = "delfin";
+    char *clave8 = "bufalo";
+    char *clave9 = "morsa";
+    char *clave10 = "iguana";
+    char *clave11 = "elefante";
+
     int x1 = 1;
     int x2 = 2;
     int x3 = 3;
+    int x4 = 4;
+    int x5 = 5;
+    int x6 = 6;
+    int x7 = 7;
+    int x8 = 8;
+    int x9 = 9;
+    int x10 = 10;
+    int x11 = 11;
+
     print_test("Prueba abb insertar clave1", abb_guardar(arbol, clave1, &x1));
     print_test("Prueba abb insertar clave2", abb_guardar(arbol, clave2, &x2));
     print_test("Prueba abb insertar clave3", abb_guardar(arbol, clave3, &x3));
+    print_test("Prueba abb insertar clave4", abb_guardar(arbol, clave4, &x4));
+    print_test("Prueba abb insertar clave5", abb_guardar(arbol, clave5, &x5));
+    print_test("Prueba abb insertar clave6", abb_guardar(arbol, clave6, &x6));
+    print_test("Prueba abb insertar clave7", abb_guardar(arbol, clave7, &x7));
+    print_test("Prueba abb insertar clave8", abb_guardar(arbol, clave8, &x8));
+    print_test("Prueba abb insertar clave9", abb_guardar(arbol, clave9, &x9));
+    print_test("Prueba abb insertar clave10", abb_guardar(arbol, clave10, &x10));
+    print_test("Prueba abb insertar clave11", abb_guardar(arbol, clave11, &x11));
+
+
     int extra[1];
     extra[0] = 0;
     
-    abb_in_order(arbol, wrapper, extra);
-    print_test("extra ahora guarda la suma de todos los datos",extra[0] == x1 + x2 + x3);
+    abb_in_order(arbol,wrapper,extra);
+    printf("extra es ahora %d la suma real es %d\n",extra[0],(x5 + x7 + x8 ) );
+    print_test("extra ahora guarda la suma de todos los datos",extra[0] ==  (x8 + x7  + x5 ));
     abb_destruir(arbol);
+  }
+
+void pruebas_iterador_externo(){
+   abb_t *arbol = abb_crear(strcmp, NULL);
+
+   char *clave1 = "perro", *valor1 = "guau";
+   char *clave2 = "gato", *valor2 = "miau";
+   char *clave3 = "vaca", *valor3 = "mu";
+   char *clave4 = "loro", *valor4 = "galleta";
+   char *clave5 = "cobayo", *valor5 = "quiz";
+   char *clave6 = "zorro", *valor6 = "en su corcel...";
+   char *clave7 = "delfin", *valor7 = "jeje";
+   char *clave8 = "bufalo", *valor8 = "pff";
+   char *clave9 = "morsa", *valor9 = "ooo";
+   char *clave10 = "iguana", *valor10 = "glu";
+   char *clave11 = "elefante", *valor11 = "ruu";
+
+
+   print_test("Prueba abb insertar clave1", abb_guardar(arbol, clave1, valor1));
+   print_test("Prueba abb insertar clave2", abb_guardar(arbol, clave2, valor2));
+   print_test("Prueba abb insertar clave3", abb_guardar(arbol, clave3, valor3));
+   print_test("Se inserto clave4", abb_guardar(arbol, clave4, valor4));
+   print_test("Se inserto clave5", abb_guardar(arbol, clave5, valor5));
+   print_test("Se inserto clave6", abb_guardar(arbol, clave6, valor6));
+   print_test("Se inserto clave7", abb_guardar(arbol, clave7, valor7));
+   print_test("Se inserto clave8", abb_guardar(arbol, clave8, valor8));
+   print_test("Se inserto clave9", abb_guardar(arbol, clave9, valor9));
+   print_test("Se inserto clave10", abb_guardar(arbol, clave10, valor10));
+   print_test("Se inserto clave10", abb_guardar(arbol, clave11, valor11));
+   print_test("La cantidad de elementos es 11", abb_cantidad(arbol) == 11);
+
+
+   abb_iter_t *iter = abb_iter_in_crear(arbol);
+   print_test("creo iterador",iter != NULL);
+
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"bufalo") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"cobayo") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"delfin") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"elefante") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"gato") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"iguana") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"loro") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"morsa") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"perro") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"vaca") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo el nodo actual", strcmp(abb_iter_in_ver_actual(iter),"zorro") == 0);
+   print_test("avanzo al siguiente nodo", abb_iter_in_avanzar(iter) == true);
+   print_test("veo si el iterador esta al final",abb_iter_in_al_final(iter) == true);
+
+   abb_iter_in_destruir(iter);
+   abb_destruir(arbol);
 }
 
-static ssize_t buscar(const char* clave, char* claves[], size_t largo)
-{
-    for (size_t i = 0; i < largo; i++) {
-        if (strcmp(clave, claves[i]) == 0) return (ssize_t) i;
+
+char *randomstr(size_t length) {
+    static char charset[] = "abcdefghijklmnopqrstuvwxyz"; 
+    char *randomString;
+    if (length) {
+        randomString = malloc(length +1);
+        if (randomString) {
+            int l = (int) (sizeof(charset) -1); 
+            int key; 
+            for (int n = 0;n < length;n++) {        
+                key = rand() % l;
+                randomString[n] = charset[key];
+            }
+            randomString[length] = '\0';
+        }
     }
-    return -1;
+    return randomString;
 }
 
-static void prueba_abb_iterar(){
+
+void pruebas_volumen(const int max){
+    const int mitad = (max / 2) -1;
+
     abb_t *arbol = abb_crear(strcmp, NULL);
-    char *claves[] = {"perro", "gato", "vaca"};
-    char *valores[] = {"guau", "miau", "mu"};
 
-    /* Inserta 3 valores */
-    print_test("Prueba abb insertar clave1", abb_guardar(arbol, claves[0], valores[0]));
-    print_test("Prueba abb insertar clave2", abb_guardar(arbol, claves[1], valores[1]));
-    print_test("Prueba abb insertar clave3", abb_guardar(arbol, claves[2], valores[2]));
+    bool inserto = true;
+    int v[max];
 
-    // Prueba de iteración sobre las claves almacenadas.
-    abb_iter_t *iter = abb_iter_in_crear(arbol);
-    const char *clave;
-    ssize_t indice;
+    for(int x = 0; x < max; x++){
+        v[x] = x + 1;
+    }
 
-    print_test("Prueba abb iterador esta al final, es false", !abb_iter_in_al_final(iter));
+    static char charset[] = "abcdefghijklmnopqrstuvwxyz"; 
+    char*claves[max];
 
-    /* Primer valor */
-    clave = abb_iter_in_ver_actual(iter);
-    indice = buscar(clave, claves, sizeof(claves) / sizeof(char *));
-    print_test("Prueba abb iterador ver actual, es una clave valida", indice != -1);
-    print_test("Prueba abb iterador ver actual, no es el mismo puntero", clave != claves[indice]);
-    print_test("Prueba abb iterador avanzar es true", abb_iter_in_avanzar(iter));
-    print_test("Prueba abb iterador esta al final, es false", !abb_iter_in_al_final(iter));
+    for(int i = 0; i < max; i++){ 
+        char randomString[7];
+        int l = (int) (sizeof(charset) -1); 
+        int key; 
+        for (int n = 0;n < 6;n++) {        
+            key = rand() % l;
+            randomString[n] = charset[key];
+        }
+        randomString[6] = '\0';
+        char*clave = randomString;
+        claves[i] = clave;
+        inserto &= abb_guardar(arbol, clave, &v[i]);
+    }
 
-    /* Segundo valor */
-    clave = abb_iter_in_ver_actual(iter);
-    indice = buscar(clave, claves, sizeof(claves) / sizeof(char *));
-    print_test("Prueba abb iterador ver actual, es una clave valida", indice != -1);
-    print_test("Prueba abb iterador ver actual, no es el mismo puntero", clave != claves[indice]);
-    print_test("Prueba abb iterador avanzar es true", abb_iter_in_avanzar(iter));
-    print_test("Prueba abb iterador esta al final, es false", !abb_iter_in_al_final(iter));
+    printf("se insertaron %d nodos... OK\n", max);
 
-    /* Tercer valor */
-    clave = abb_iter_in_ver_actual(iter);
-    indice = buscar(clave, claves, sizeof(claves) / sizeof(char *));
-    print_test("Prueba abb iterador ver actual, es una clave valida", indice != -1);
-    print_test("Prueba abb iterador ver actual, no es el mismo puntero", clave != claves[indice]);
-    /* Se anula esta prueba por diferencias de criterios */
-    abb_iter_in_avanzar(iter);
-    print_test("Prueba hash iterador esta al final, es true", abb_iter_in_al_final(iter));
+    for (int i = max - 1; i >= mitad; i--){ 
+       abb_borrar(arbol, claves[i]);
+    }
 
-    /* Vuelve a tratar de avanzar, por las dudas */
-    print_test("Prueba abb iterador ver actual, es NULL", !abb_iter_in_ver_actual(iter));
-    print_test("Prueba abb iterador avanzar es false", !abb_iter_in_avanzar(iter));
-    print_test("Prueba abb iterador esta al final, es true", abb_iter_in_al_final(iter));
-
-    abb_iter_in_destruir(iter);
+    print_test("se borraron la mitad de los nodos",true);
     abb_destruir(arbol);
 }
+
 
 void pruebas_abb_alumno(){
-//    pruebas_tester();
+
+    printf("-----PRUEBAS ARBOL-----\n");
+    pruebas_tester();
+
+    printf("\n");
+    printf("-----ARBOL VACIO-----\n");
 	prueba_crear_abb_vacio();
-    pruebas_iterar_abb_vacio();
-	prueba_abb_insertar();
-	prueba_abb_reemplazar();
-	prueba_abb_reemplazar_con_destruir();
+
+    printf("\n");
+    printf("-----INSERTAR-----\n");
+    prueba_abb_insertar();
+
+    printf("\n");
+    printf("-----REEMPLAZAR-----\n");
+    prueba_abb_reemplazar();
+
+    printf("\n");
+    printf("-----REEMPLAZAR Y DESTRUIR-----\n");
+    prueba_abb_reemplazar_con_destruir();
+
+    printf("\n");
+    printf("-----BORRAR-----\n");
     prueba_abb_borrar();
-    prueba_abb_clave_vacia();
-    prueba_abb_valor_null();
-//    prueba_abb_volumen(5000, true);
-    prueba_iterador_interno();
-    prueba_abb_iterar();
+
+    printf("\n");
+    printf("-----ITERADOR INTERNO-----\n");
+    pruebas_iterador_interno();
+
+    printf("\n");
+    printf("-----ITERADOR EXTERNO-----\n");
+    pruebas_iterador_externo();
+
+    printf("\n");
+    printf("-----PRUEBAS VOLUMEN-----\n");
+    pruebas_volumen(5000);
+
 }
